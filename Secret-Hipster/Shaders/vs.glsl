@@ -1,8 +1,5 @@
 ﻿#version 330
 
-//layout(location = 0) in vec3 vertexPosition_modelspace;
-//layout(location = 1) in vec2 vertexUV;
-
 in vec3 vPosition;
 in vec2 vColor;
 
