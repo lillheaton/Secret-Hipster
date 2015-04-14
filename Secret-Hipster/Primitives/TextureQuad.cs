@@ -1,88 +1,59 @@
 ﻿using OpenTK;
-using System.Drawing;
+using OpenTK.Graphics.OpenGL;
+using Secret_Hipster.Graphics;
+
 namespace Secret_Hipster.Primitives
 {
-    public class TextureQuad : ITexturePrimitive
+    public class TextureQuad
     {
-        public Matrix4 TransformationMatrix { get; set; }
-        public Vector3[] Vertices { get; private set; }
-        public Vector2[] TexturePoints { get; private set; }
-        public Bitmap Image { get; private set; }
+        private static Buffer verticesBuffer;
+        private static Buffer texturePointBuffer;
+        public static Buffer VerticesBuffer { get { return verticesBuffer ?? (verticesBuffer = new Buffer(Graphics.Primitives.CubeVertices)); } }
+        public static Buffer TexturePointBuffer { get { return texturePointBuffer ?? (texturePointBuffer = new Buffer(Graphics.Primitives.CubeTexturePoints)); } }
 
-        public TextureQuad(Bitmap image)
+        public Matrix4 TranslationMatrix { get; set; }
+        public Matrix4 ScaleMatric { get; set; }
+        //public Matrix4 RotationMatrix { get; set; }
+
+        public int Texture { get; private set; }
+
+        private Matrix4 modelMatrix;
+        private float rotation;
+
+        public TextureQuad(int texture)
         {
-            this.CreateSampleCube();
-            this.Image = image;
-            this.TransformationMatrix = Matrix4.Identity;
+            this.TranslationMatrix = Matrix4.CreateTranslation(0, 0, 1f);
+            this.ScaleMatric = Matrix4.CreateScale(0.5f);
+            //this.RotationMatrix = Matrix4.Identity;
+
+            this.Texture = texture;
         }
 
-        public TextureQuad(Bitmap image, Vector3[] vertices, Vector2[] texturePoints)
+        public void Update(double time)
         {
-            this.Vertices = vertices;
-            this.TexturePoints = texturePoints;
-            this.Image = image;
-            this.TransformationMatrix = Matrix4.Identity;
+            rotation += (float)time;
+            this.modelMatrix = TranslationMatrix * ScaleMatric * Matrix4.CreateRotationY(rotation);
         }
 
-        
-
-        public Vector3[] GetVertices()
+        public void Draw(Spritebatch spritebatch)
         {
-            return Vertices;
-        }
+            // Matrix transformation
+            Matrix4 transformationMatrix = modelMatrix;
+            GL.UniformMatrix4(spritebatch.TextureProgram.ModelViewUniform, false, ref transformationMatrix);
 
-        public Vector2[] GetTexturePoints()
-        {
-            return TexturePoints;
-        }
+            // Use texture
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, this.Texture);
+            GL.Uniform1(spritebatch.TextureProgram.TextureUniform, (int)TextureUnit.Texture0);
 
-        private void CreateSampleCube()
-        {
-            // Creates a cube
-            Vertices = new[]
-            {
-                new Vector3(-1f, 1f, 0f), // Top Left
-                new Vector3(1f, 1f, 0f), // Top Right
-                new Vector3(1f, -1f, 0f), // Bottom right
-                new Vector3(-1f, -1f, 0f), // bottom left
+            // Attribute pointers
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VerticesBuffer.MemoryLocation);
+            GL.VertexAttribPointer(spritebatch.TextureProgram.PositionAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-                new Vector3(-1f, 1f, -2f), // Top Left
-                new Vector3(1f, 1f, -2f), // Top Right
-                new Vector3(1f, -1f, -2f), // Bottom right
-                new Vector3(-1f, -1f, -2f), // bottom left
+            GL.BindBuffer(BufferTarget.ArrayBuffer, TexturePointBuffer.MemoryLocation);
+            GL.VertexAttribPointer(spritebatch.TextureProgram.TexturePointsAttribute, 2, VertexAttribPointerType.Float, false, 0, 0);
 
-                new Vector3(-1f, 1f, 0f), 
-                new Vector3(-1f, -1f, 0f), 
-                new Vector3(-1f, -1f, -2f),
-                new Vector3(-1f, 1f, -2f), 
-
-                new Vector3(1f, 1f, 0f), 
-                new Vector3(1f, -1f, 0f),
-                new Vector3(1f, -1f, -2f), 
-                new Vector3(1f, 1f, -2f),
-            };
-
-            TexturePoints = new[] { 
-                new Vector2(0f, 0f),
-                new Vector2(1f, 0f),
-                new Vector2(1f, 1f),
-                new Vector2(0f, 1f),
-
-                new Vector2(0f, 0f),
-                new Vector2(1f, 0f),
-                new Vector2(1f, 1f),
-                new Vector2(0f, 1f),
-
-                new Vector2(0f, 0f),
-                new Vector2(0f, 1f),
-                new Vector2(1f, 1f),
-                new Vector2(1f, 0f),
-
-                new Vector2(0f, 0f),
-                new Vector2(0f, 1f),
-                new Vector2(1f, 1f),
-                new Vector2(1f, 0f),
-            };
+            GL.DrawArrays(PrimitiveType.Quads, 0, VerticesBuffer.Length);
         }
     }
 }
