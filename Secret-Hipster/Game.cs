@@ -26,7 +26,6 @@ namespace Secret_Hipster
             quadHandler.AddCube();
             quadHandler.AddCube();
 
-
             quadHandler.TextureQuads[1].ScaleMatric = Matrix4.CreateScale(0.4f);
             quadHandler.TextureQuads[1].TranslationMatrix = Matrix4.CreateTranslation(-0.5f, 0, 0);
         }

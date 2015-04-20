@@ -9,10 +9,8 @@ namespace Secret_Hipster.Util
     public class QuadHandler
     {
         public List<TextureQuad> TextureQuads { get; private set; }
-        private int texture;
-
-        private int vertexBuffer;
-        private int texturePointBuffer;
+        private int greenTexture;
+        private int blueTexture;
 
         public QuadHandler()
         {
@@ -23,20 +21,27 @@ namespace Secret_Hipster.Util
         {
             this.TextureQuads = new List<TextureQuad>();
             this.CreateTexture();
-
-            GL.GenBuffers(1, out vertexBuffer);
-            GL.GenBuffers(1, out texturePointBuffer);
         }
 
         private void CreateTexture()
         {
-            var bitmap = new Bitmap("Textures/Containers/container001-green.png");
-            Spritebatch.GenerateTexture(bitmap, out this.texture);
+            var bitmap = new Bitmap("Textures/Containers/container001-blue.png");
+            Spritebatch.GenerateTexture(bitmap, out this.blueTexture);
+
+            var bitmap2 = new Bitmap("Textures/Containers/container001-green.png");
+            Spritebatch.GenerateTexture(bitmap2, out this.greenTexture);
         }
         
         public void AddCube()
         {
-            this.TextureQuads.Add(new TextureQuad(this.texture));
+            if (TextureQuads.Count % 2 == 0)
+            {
+                this.TextureQuads.Add(new TextureQuad(this.blueTexture));    
+            }
+            else
+            {
+                this.TextureQuads.Add(new TextureQuad(this.greenTexture));
+            }    
         }
 
         public void Update(double time)

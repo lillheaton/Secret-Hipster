@@ -33,6 +33,7 @@ namespace Secret_Hipster.Primitives
         {
             rotation += (float)time;
             this.modelMatrix = TranslationMatrix * ScaleMatric * Matrix4.CreateRotationY(rotation);
+            //this.modelMatrix = Matrix4.CreateTranslation(-0.4f, 0, 1f) * Matrix4.CreateScale(0.5f) * Matrix4.CreateRotationY(rotation);
         }
 
         public void Draw(Spritebatch spritebatch)

@@ -80,6 +80,10 @@ namespace Secret_Hipster.Graphics
 
             image.UnlockBits(data);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+
+            // Dispose and release texture
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            image.Dispose();
         }
     }
 }
