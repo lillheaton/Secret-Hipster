@@ -32,14 +32,14 @@ namespace Secret_Hipster.Primitives
         public void Update(double time)
         {
             rotation += (float)time;
-            this.modelMatrix = TranslationMatrix * ScaleMatric * Matrix4.CreateRotationY(rotation);
+            this.modelMatrix = TranslationMatrix * Matrix4.CreateRotationY(rotation) * Matrix4.CreateTranslation(0,0,-2);
             //this.modelMatrix = Matrix4.CreateTranslation(-0.4f, 0, 1f) * Matrix4.CreateScale(0.5f) * Matrix4.CreateRotationY(rotation);
         }
 
         public void Draw(Spritebatch spritebatch)
         {
             // Matrix transformation
-            Matrix4 transformationMatrix = modelMatrix;
+            Matrix4 transformationMatrix = modelMatrix * spritebatch.Camera.GetViewProjectionMatrix();
             GL.UniformMatrix4(spritebatch.TextureProgram.ModelViewUniform, false, ref transformationMatrix);
 
             // Use texture

@@ -9,13 +9,15 @@ namespace Secret_Hipster.Graphics
 {
     public class Spritebatch
     {
+        public Camera Camera { get; private set; }
         public TextureProgram TextureProgram { get; private set; }
 
         private bool hasBegun;
         private Type programType;
 
-        public Spritebatch()
+        public Spritebatch(Camera camera)
         {
+            this.Camera = camera;
             this.Init();
         }
 

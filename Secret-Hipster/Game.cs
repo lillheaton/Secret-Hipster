@@ -11,6 +11,7 @@ namespace Secret_Hipster
 {
     public class Game : GameWindow
     {
+        private Camera camera;
         private Spritebatch spritebatch;
         private QuadHandler quadHandler;
 
@@ -21,7 +22,8 @@ namespace Secret_Hipster
             VSync = VSyncMode.On;
             GL.Viewport(0, 0, Width, Height);
 
-            spritebatch = new Spritebatch();
+            camera = new Camera(Width, Height);
+            spritebatch = new Spritebatch(camera);
             quadHandler = new QuadHandler();
             quadHandler.AddCube();
             quadHandler.AddCube();
@@ -63,6 +65,33 @@ namespace Secret_Hipster
             spritebatch.End();
 
             SwapBuffers();
+        }
+
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            switch (e.Key)
+            {
+                case Key.W:
+                    camera.Move(0f, 0.1f, 0f);
+                    break;
+                case Key.A:
+                    camera.Move(-0.1f, 0f, 0f);
+                    break;
+                case Key.S:
+                    camera.Move(0f, -0.1f, 0f);
+                    break;
+                case Key.D:
+                    camera.Move(0.1f, 0f, 0f);
+                    break;
+                case Key.Up:
+                    camera.Move(0f, 0f, 0.1f);
+                    break;
+                case Key.Down:
+                    camera.Move(0f, 0f, -0.1f);
+                    break;
+            }
         }
     }
 }
