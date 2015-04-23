@@ -3,6 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using Secret_Hipster.Graphics;
 using Secret_Hipster.OpenGLPrograms;
+using Secret_Hipster.Primitives;
 using Secret_Hipster.Util;
 using System;
 using System.Drawing;
@@ -14,6 +15,12 @@ namespace Secret_Hipster
         private Camera camera;
         private Spritebatch spritebatch;
         private QuadHandler quadHandler;
+        private Grid grid;
+        private Vector2 lastMousePos;
+
+        public Game(int width, int height) : base(width, height)
+        {
+        }
 
         // Settings, load textures, sounds
         protected override void OnLoad(EventArgs e)
@@ -22,14 +29,17 @@ namespace Secret_Hipster
             VSync = VSyncMode.On;
             GL.Viewport(0, 0, Width, Height);
 
+            lastMousePos = new Vector2();
             camera = new Camera(Width, Height);
             spritebatch = new Spritebatch(camera);
+            grid = new Grid(Color.White);
             quadHandler = new QuadHandler();
-            quadHandler.AddCube();
-            quadHandler.AddCube();
+            //quadHandler.AddCube();
+            //quadHandler.AddCube();
+            
 
-            quadHandler.TextureQuads[1].ScaleMatric = Matrix4.CreateScale(0.4f);
-            quadHandler.TextureQuads[1].TranslationMatrix = Matrix4.CreateTranslation(-0.5f, 0, 0);
+            //quadHandler.TextureQuads[1].ScaleMatric = Matrix4.CreateScale(0.4f);
+            //quadHandler.TextureQuads[1].TranslationMatrix = Matrix4.CreateTranslation(-0.5f, 0, 0);
         }
 
         protected override void OnResize(EventArgs e)
@@ -42,6 +52,14 @@ namespace Secret_Hipster
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+
+            if (Focused)
+            {
+                Vector2 delta = lastMousePos - new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
+
+                this.camera.AddRotation(delta.X, delta.Y);
+                ResetCursor();
+            }
 
             quadHandler.Update(e.Time);
 
@@ -64,7 +82,15 @@ namespace Secret_Hipster
             quadHandler.Draw(spritebatch);
             spritebatch.End();
 
+            grid.Draw(spritebatch);
+
             SwapBuffers();
+        }
+
+        private void ResetCursor()
+        {
+            OpenTK.Input.Mouse.SetPosition(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+            lastMousePos = new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
@@ -91,6 +117,16 @@ namespace Secret_Hipster
                 case Key.Down:
                     camera.Move(0f, 0f, -0.1f);
                     break;
+            }
+        }
+
+        protected override void OnFocusedChanged(EventArgs e)
+        {
+            base.OnFocusedChanged(e);
+
+            if (Focused)
+            {
+                ResetCursor();
             }
         }
     }

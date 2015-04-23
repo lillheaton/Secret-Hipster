@@ -22,7 +22,7 @@ namespace Secret_Hipster.Graphics
             this.Orientation = new Vector3((float)Math.PI, 0, 0);
             this.MoveSpeed = 0.2f;
             this.MouseSensitivity = 0.01f;
-            this.PerspectiveFieldOfViewMatrix = Matrix4.CreatePerspectiveFieldOfView(1.3f, width / (float)height, 1.0f, 40f);
+            this.PerspectiveFieldOfViewMatrix = Matrix4.CreatePerspectiveFieldOfView(1.3f, width / (float)height, 0.5f, 40f);
         }
 
         public Matrix4 GetViewMatrix()

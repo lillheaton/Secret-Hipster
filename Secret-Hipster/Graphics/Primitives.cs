@@ -25,6 +25,18 @@ namespace Secret_Hipster.Graphics
             new Vector3(1f, -1f, 0f),
             new Vector3(1f, -1f, -2f), 
             new Vector3(1f, 1f, -2f),
+
+            // Top
+            new Vector3(-1f, 1f, 0f), 
+            new Vector3(1f, 1f, 0f),
+            new Vector3(1f, 1f, -2f), 
+            new Vector3(-1f, 1f, -2f),
+
+            // Bottom
+            new Vector3(-1f, -1f, 0f),
+            new Vector3(1f, -1f, 0f),
+            new Vector3(1f, -1f, -2f), 
+            new Vector3(-1f, -1f, -2f)
         };
 
         public static Vector2[] CubeTexturePoints = new[] 
@@ -48,6 +60,18 @@ namespace Secret_Hipster.Graphics
             new Vector2(0f, 1f),
             new Vector2(1f, 1f),
             new Vector2(1f, 0f),
+
+            // Top
+            new Vector2(0f, 0f),
+            new Vector2(0f, 1f),
+            new Vector2(1f, 1f),
+            new Vector2(1f, 0f),
+
+            // Bottom
+            new Vector2(0f, 0f),
+            new Vector2(0f, 1f),
+            new Vector2(1f, 1f),
+            new Vector2(1f, 0f)
         };
     }
 }

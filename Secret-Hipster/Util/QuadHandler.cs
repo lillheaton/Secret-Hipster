@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using Secret_Hipster.Graphics;
 using Secret_Hipster.Primitives;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Secret_Hipster.Util
         {
             this.TextureQuads = new List<TextureQuad>();
             this.CreateTexture();
+            this.CreateCubes();
         }
 
         private void CreateTexture()
@@ -31,19 +33,31 @@ namespace Secret_Hipster.Util
             var bitmap2 = new Bitmap("Textures/Containers/container001-green.png");
             Spritebatch.GenerateTexture(bitmap2, out this.greenTexture);
         }
-        
-        public void AddCube()
-        {
-            if (TextureQuads.Count % 2 == 0)
-            {
-                this.TextureQuads.Add(new TextureQuad(this.blueTexture));    
-            }
-            else
-            {
-                this.TextureQuads.Add(new TextureQuad(this.greenTexture));
-            }    
-        }
 
+        private void CreateCubes()
+        {
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    TextureQuad cube;
+
+                    if (i % 2 == 0)
+                    {
+                        cube = new TextureQuad(this.blueTexture);
+                        cube.Position = new Vector3(3 * i, 0, 3 * j);
+                    }
+                    else
+                    {
+                        cube = new TextureQuad(this.greenTexture);
+                        cube.Position = new Vector3(3 * i, 0, 3 * j);
+                    }
+
+                    this.TextureQuads.Add(cube);
+                }
+            }
+        }
+        
         public void Update(double time)
         {
             foreach (var textureQuad in TextureQuads)

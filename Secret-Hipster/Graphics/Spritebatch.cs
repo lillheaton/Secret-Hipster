@@ -11,6 +11,7 @@ namespace Secret_Hipster.Graphics
     {
         public Camera Camera { get; private set; }
         public TextureProgram TextureProgram { get; private set; }
+        public ColorProgram ColorProgram { get; private set; }
 
         private bool hasBegun;
         private Type programType;
@@ -24,6 +25,7 @@ namespace Secret_Hipster.Graphics
         private void Init()
         {
             this.TextureProgram = new TextureProgram();
+            this.ColorProgram = new ColorProgram();
             this.hasBegun = false;
         }
 
@@ -39,6 +41,10 @@ namespace Secret_Hipster.Graphics
             {
                 this.TextureProgram.UseProgram();
             }
+            if (programType == typeof(ColorProgram))
+            {
+                this.ColorProgram.UseProgram();
+            }
 
             hasBegun = true;
         }
@@ -53,6 +59,10 @@ namespace Secret_Hipster.Graphics
             if (programType == typeof(TextureProgram))
             {
                 this.TextureProgram.EndProgram();
+            }
+            if (programType == typeof(ColorProgram))
+            {
+                this.ColorProgram.EndProgram();
             }
 
             GL.Flush();
@@ -82,6 +92,8 @@ namespace Secret_Hipster.Graphics
 
             image.UnlockBits(data);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
 
             // Dispose and release texture
             GL.BindTexture(TextureTarget.Texture2D, 0);

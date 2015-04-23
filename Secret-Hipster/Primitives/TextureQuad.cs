@@ -4,17 +4,14 @@ using Secret_Hipster.Graphics;
 
 namespace Secret_Hipster.Primitives
 {
-    public class TextureQuad
+    public class TextureQuad : IDrawable
     {
         private static Buffer verticesBuffer;
         private static Buffer texturePointBuffer;
         public static Buffer VerticesBuffer { get { return verticesBuffer ?? (verticesBuffer = new Buffer(Graphics.Primitives.CubeVertices)); } }
         public static Buffer TexturePointBuffer { get { return texturePointBuffer ?? (texturePointBuffer = new Buffer(Graphics.Primitives.CubeTexturePoints)); } }
 
-        public Matrix4 TranslationMatrix { get; set; }
-        public Matrix4 ScaleMatric { get; set; }
-        //public Matrix4 RotationMatrix { get; set; }
-
+        public Vector3 Position { get; set; }        
         public int Texture { get; private set; }
 
         private Matrix4 modelMatrix;
@@ -22,18 +19,14 @@ namespace Secret_Hipster.Primitives
 
         public TextureQuad(int texture)
         {
-            this.TranslationMatrix = Matrix4.CreateTranslation(0, 0, 1f);
-            this.ScaleMatric = Matrix4.CreateScale(0.5f);
-            //this.RotationMatrix = Matrix4.Identity;
-
+            this.Position = new Vector3(0, 0, 0);
             this.Texture = texture;
         }
 
         public void Update(double time)
         {
             rotation += (float)time;
-            this.modelMatrix = TranslationMatrix * Matrix4.CreateRotationY(rotation) * Matrix4.CreateTranslation(0,0,-2);
-            //this.modelMatrix = Matrix4.CreateTranslation(-0.4f, 0, 1f) * Matrix4.CreateScale(0.5f) * Matrix4.CreateRotationY(rotation);
+            this.modelMatrix = Matrix4.CreateTranslation(0, 0, 1f) * Matrix4.CreateRotationY(rotation) * Matrix4.CreateTranslation(Position);
         }
 
         public void Draw(Spritebatch spritebatch)
