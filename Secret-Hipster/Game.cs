@@ -31,15 +31,12 @@ namespace Secret_Hipster
 
             lastMousePos = new Vector2();
             camera = new Camera(Width, Height);
+
+            camera.Position = new Vector3(0, 4, 6);
+
             spritebatch = new Spritebatch(camera);
             grid = new Grid(Color.White);
             quadHandler = new QuadHandler();
-            //quadHandler.AddCube();
-            //quadHandler.AddCube();
-            
-
-            //quadHandler.TextureQuads[1].ScaleMatric = Matrix4.CreateScale(0.4f);
-            //quadHandler.TextureQuads[1].TranslationMatrix = Matrix4.CreateTranslation(-0.5f, 0, 0);
         }
 
         protected override void OnResize(EventArgs e)
@@ -82,7 +79,7 @@ namespace Secret_Hipster
             quadHandler.Draw(spritebatch);
             spritebatch.End();
 
-            grid.Draw(spritebatch);
+            //grid.Draw(spritebatch);
 
             SwapBuffers();
         }
@@ -100,22 +97,22 @@ namespace Secret_Hipster
             switch (e.Key)
             {
                 case Key.W:
-                    camera.Move(0f, 0.1f, 0f);
+                    camera.Move(0f, 0f, 0.1f);
                     break;
                 case Key.A:
                     camera.Move(-0.1f, 0f, 0f);
                     break;
                 case Key.S:
-                    camera.Move(0f, -0.1f, 0f);
+                    camera.Move(0f, 0f, -0.1f);
                     break;
                 case Key.D:
                     camera.Move(0.1f, 0f, 0f);
                     break;
                 case Key.Up:
-                    camera.Move(0f, 0f, 0.1f);
+                    camera.Move(0f, 0.1f, 0f);
                     break;
                 case Key.Down:
-                    camera.Move(0f, 0f, -0.1f);
+                    camera.Move(0f, -0.1f, 0f);
                     break;
             }
         }

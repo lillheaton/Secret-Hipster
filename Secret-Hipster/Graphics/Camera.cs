@@ -5,7 +5,7 @@ namespace Secret_Hipster.Graphics
 {
     public class Camera
     {
-        public Vector3 Position { get; private set; }
+        public Vector3 Position { get; set; }
         public Vector3 Orientation { get; private set; }
         public float MoveSpeed { get; private set; }
         public float MouseSensitivity { get; private set; }
@@ -45,12 +45,12 @@ namespace Secret_Hipster.Graphics
         {
             var offset = new Vector3();
 
-            var forward = new Vector3((float)Math.Sin(Orientation.X), 0, (float)Math.Cos(Orientation.X));
+            var forward = new Vector3((float)Math.Sin(Orientation.X), (float)Math.Sin(Orientation.Y), (float)Math.Cos(Orientation.X));
             var right = new Vector3(-forward.Z, 0, forward.X);
 
             offset += x * right;
-            offset += y * forward;
-            offset.Y += z;
+            offset += z * forward;
+            offset.Y += y;
 
             offset.NormalizeFast();
             offset = Vector3.Multiply(offset, MoveSpeed);

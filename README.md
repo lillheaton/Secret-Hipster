@@ -8,3 +8,7 @@ Funny project for learning OpenGl (OpenTK) and how to structure it.
 Progress
 
 ![alt tag](http://s12.postimg.org/fqhh62cel/rotating_Cubes.jpg)
+
+A Wave... of cubes!
+
+![alt tag](http://s22.postimg.org/q0hjsq5ep/Cube_Wave.jpg)

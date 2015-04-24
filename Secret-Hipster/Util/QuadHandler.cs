@@ -36,25 +36,34 @@ namespace Secret_Hipster.Util
 
         private void CreateCubes()
         {
-            for (int i = -1; i < 2; i++)
+            double ii = 0;
+            double jj = 0;
+
+            for (int i = -3; i < 4; i++)
             {
-                for (int j = -1; j < 2; j++)
+                for (int j = -3; j < 4; j++)
                 {
                     TextureQuad cube;
 
                     if (i % 2 == 0)
                     {
                         cube = new TextureQuad(this.blueTexture);
-                        cube.Position = new Vector3(3 * i, 0, 3 * j);
+                        cube.Position = new Vector3(3 * i, 1, 3 * j);
+                        cube.StartAfterSeconds = ii + jj;
                     }
                     else
                     {
                         cube = new TextureQuad(this.greenTexture);
-                        cube.Position = new Vector3(3 * i, 0, 3 * j);
+                        cube.Position = new Vector3(3 * i, 1, 3 * j);
+                        cube.StartAfterSeconds = ii + jj;
                     }
 
                     this.TextureQuads.Add(cube);
+
+                    jj += 0.5;
                 }
+                jj = 0;
+                ii += 0.5;
             }
         }
         
