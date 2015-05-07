@@ -15,6 +15,7 @@ namespace Secret_Hipster
         private Camera camera;
         private Spritebatch spritebatch;
         private QuadHandler quadHandler;
+        private SierpinskiCarpet sierpinskiCarpet;
         private Grid grid;
         private Vector2 lastMousePos;
 
@@ -32,11 +33,12 @@ namespace Secret_Hipster
             lastMousePos = new Vector2();
             camera = new Camera(Width, Height);
 
-            camera.Position = new Vector3(0, 4, 6);
+            camera.Position = new Vector3(0, 10, 20);
 
             spritebatch = new Spritebatch(camera);
             grid = new Grid(Color.White);
             quadHandler = new QuadHandler();
+            sierpinskiCarpet = new SierpinskiCarpet(12);
         }
 
         protected override void OnResize(EventArgs e)
@@ -58,7 +60,7 @@ namespace Secret_Hipster
                 ResetCursor();
             }
 
-            quadHandler.Update(e.Time);
+            //quadHandler.Update(e.Time);
 
             if (Keyboard[Key.Escape])
             {
@@ -75,9 +77,11 @@ namespace Secret_Hipster
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Texture2D);
 
-            spritebatch.Begin<TextureProgram>();
-            quadHandler.Draw(spritebatch);
-            spritebatch.End();
+            //spritebatch.Begin<TextureProgram>();
+            //quadHandler.Draw(spritebatch);
+            //spritebatch.End();
+
+            sierpinskiCarpet.Draw(spritebatch);
 
             //grid.Draw(spritebatch);
 

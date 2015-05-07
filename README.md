@@ -12,3 +12,11 @@ Progress
 A Wave... of cubes!
 
 ![alt tag](http://s22.postimg.org/q0hjsq5ep/Cube_Wave.jpg)
+
+Sierpinski Carpet!
+
+![alt tag](http://s21.postimg.org/e91uq2dwn/Sierpinski_Carpet.jpg)
+
+Menger Sponge! I think I need to start learning about lighting
+
+![alt tag](http://s24.postimg.org/xz5qd8ned/Menger_Sponge.jpg)

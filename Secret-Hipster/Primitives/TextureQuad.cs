@@ -103,7 +103,7 @@ namespace Secret_Hipster.Primitives
 
         public void Draw(Spritebatch spritebatch)
         {
-            // Matrix transformation
+            // Matrix transformation           
             Matrix4 transformationMatrix = modelMatrix * spritebatch.Camera.GetViewProjectionMatrix();
             GL.UniformMatrix4(spritebatch.TextureProgram.ModelViewUniform, false, ref transformationMatrix);
 
